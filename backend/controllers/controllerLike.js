@@ -5,8 +5,9 @@ const {Like} = require('../models/index');
  * @requête {GET} api/posts/:id/likes
  */
 exports.findAllLikes = (req, res, next) => {
-    Like.findAll({where: {
-      post_id: req.params.id}})
+    Like.findAll({
+      include:{all:true, nested:true},
+      where: {post_id: req.params.id}})
       .then(likes => {res.status(200).json(likes)})
       .catch(error => res.status(400).json({ error }))
   };

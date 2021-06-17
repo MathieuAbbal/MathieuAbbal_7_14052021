@@ -1,5 +1,5 @@
 //importation des modèles
-const { User,Post,Comment,Like } = require('../models/index');
+const { User, Post, Comment, Like } = require('../models/index');
 
 const fs = require('fs');
 
@@ -35,7 +35,7 @@ exports.modifyUser = (req, res, next) => {
   const userObject = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
     {
       ...req.body.user,//opérateur spread pour faire une copie de la variable
-      avatar: req.file.filename
+      avatar:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
 
   User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
@@ -51,9 +51,9 @@ exports.deleteUser = (req, res, next) => {
     .then(() =>
       Comment.destroy({ where: { user_id: req.params.id } })//objet de comparaison avec opérateur de sélection
         .then(() =>
-          Post.findAll({ where: { user_id: req.params.id } })//objet de comparaison avec opérateur de sélection
+          Post.findAll({ where: { user_id: req.params.id } })//renvoie les valeurs du tableau qui respecte la condition donnée par la fonction de test passée en argument
             .then((posts) => {
-              posts.forEach(post => {//pour chaque éléments du tableau
+              posts.forEach(post => {//pour chaque éléments du tableau on execute la fonction 
                 Comment.destroy({ where: { post_id: post.id } })//supprime les commentaires
                 Like.destroy({ where: { post_id: post.id } })//supprime les likes
                 Post.destroy({ where: { id: post.id } })//supprime les posts

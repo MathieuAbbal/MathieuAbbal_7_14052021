@@ -75,7 +75,8 @@ exports.findPostsByUserId = (req, res, next) => {
  * @requête { PUT } /api/posts/:id
  */
 exports.modifyPost = (req, res, next)=>{
-    const postObject = req.file?
+    //Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux
+    const postObject = req.file?//on regarde si il y a un fichier dans la requête
     {
         ...req.body.post,
         imageurl:req.file.filename
