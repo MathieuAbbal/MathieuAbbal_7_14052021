@@ -68,7 +68,7 @@ exports.login = (req, res, next) => {
                 user_id: user.id,//payload (les données qu'on veut encoder dans le token)
                 isAdmin: user.isAdmin
               },
-              "RANDOM_TOKEN_SECRET", // clé secrète
+              "4bea540f75ac82d5dfea72aefd96d3c9", // clé secrète
               { expiresIn: "12h" } //durée de vie
             ),
           });

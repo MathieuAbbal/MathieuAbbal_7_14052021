@@ -7,16 +7,10 @@ module.exports = (req, res, next) => {
         //recupère le token dans le header en oubliant le mot clé Bearer
         const token = req.headers.authorization.split(' ')[1];//crée un tableau et récupère l'élément aprés l'espace
         //décode le token
-        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-        //récupere l'userId
-        const user_id = decodedToken.user_id;
-        //vérifie si l'userId de la requête correspond à celui du token 
-        if (req.body.user_id && req.body.user_id !== user_id) {
-            throw 'User ID non valable !';
-        } else {
-            //passe la requête au prochain middelware
+        req.token = jwt.verify(token, '4bea540f75ac82d5dfea72aefd96d3c9');
+        
             next();
-        }
+        
     } catch {
         res.status(401).json({
             error: new Error('Requête non authentifiée !')

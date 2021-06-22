@@ -1,5 +1,5 @@
 //importation des modèles
-const { Post,Comment,Like } = require('../models/index');
+const { Post, Comment, Like } = require('../models/index');
 
 
 const fs = require('fs');
@@ -17,8 +17,9 @@ exports.createPost = (req, res, next) => {
 
     // Création d'un nouvel objet post
     const post = new Post({
-      ...postObject,//opérateur spread pour faire une copie de la variable
-     
+        ...postObject,
+        user_id: req.token.user_id//opérateur spread pour faire une copie de la variable
+
     });
     // Enregistrement de l'objet post dans la base de données
     post.save()
@@ -32,7 +33,7 @@ exports.createPost = (req, res, next) => {
  */
 exports.findAllPosts = (req, res, next) => {
     Post.findAll({
-        include:{all:true, nested:true},
+        include: { all: true, nested: true },
         order: [
             ['createdAt', 'DESC'],
         ]
@@ -49,11 +50,12 @@ exports.findAllPosts = (req, res, next) => {
  */
 exports.findOnePost = (req, res, next) => {
     Post.findOne({
-        include:{all:true, nested:true},
-        where: { id: req.params.id }}) //objet de comparaison avec opérateur de sélection        
-  
-     .then(post => {res.status(200).json(post)})
-     .catch(error => res.status(404).json({ error }));
+        include: { all: true, nested: true },
+        where: { id: req.params.id }
+    }) //objet de comparaison avec opérateur de sélection        
+
+        .then(post => { res.status(200).json(post) })
+        .catch(error => res.status(404).json({ error }));
 };
 /**
  * Récupère toutes les publications d'un utilisateur en particulier(user_id)
@@ -61,42 +63,56 @@ exports.findOnePost = (req, res, next) => {
  */
 exports.findPostsByUserId = (req, res, next) => {
     Post.findAll({
-        include:{all:true, nested:true},
+        include: { all: true, nested: true },
         where: { user_id: req.params.id },//objet de comparaison avec opérateur de sélection
         order: [
             ['createdAt', 'DESC'],
         ]
     })
-        .then(posts => { res.status(200).json({posts })})
+        .then(posts => { res.status(200).json({ posts }) })
         .catch(error => res.status(400).json({ error }));
 };
 /**
  * Modifie une publication
  * @requête { PUT } /api/posts/:id
  */
-exports.modifyPost = (req, res, next)=>{
+exports.modifyPost = (req, res, next) => {
     //Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux
-    const postObject = req.file?//on regarde si il y a un fichier dans la requête
-    {
-        ...req.body.post,
-        imageurl:req.file.filename
-    } : {...req.body};
-    Post.update({...postObject, id:req.params.id},{where:{id:req.params.id}})
-    .then(()=>res.status(200).json({message:'Publication modifiée !'}))
-    .catch(error=>res.status(400).json({error}));
+    Post.findOne({
+        where: { id: req.params.id }
+    }) //objet de comparaison avec opérateur de sélection        
+
+        .then(post => {
+            if (post.user_id === req.token.user_id) {
+                const postObject = req.file ?//on regarde si il y a un fichier dans la requête
+                    {
+                        ...req.body.post,
+                        imageurl: req.file.filename
+                    } : { ...req.body };
+                Post.update({ ...postObject, id: req.params.id }, { where: { id: req.params.id } })
+                    .then(() => res.status(200).json({ message: 'Publication modifiée !' }))
+                    .catch(error => res.status(400).json({ error }));
+
+            }
+            else {
+                res.status(403).json({ 'message': 'Vous n\'ètes pas autoriser' })
+            }
+        })
+        .catch(error => res.status(404).json({ error }));
+
 };
 /**
  * Suppression d'une publication
  * @requête {DELETE}/api/posts/:id
  */
-exports.deletePost = (req, res, next) => {    
-        Like.destroy({where: {post_id: req.params.id}})
-        .then(() => 
-          Comment.destroy({where: {post_id: req.params.id}})
-          .then(() => 
-            Post.destroy({ where: {id: req.params.id} })
-            .then(() => res.status(200).json({ message: 'Publication supprimée !'}))
-          )
-          )
+exports.deletePost = (req, res, next) => {
+    Like.destroy({ where: { post_id: req.params.id } })
+        .then(() =>
+            Comment.destroy({ where: { post_id: req.params.id } })
+                .then(() =>
+                    Post.destroy({ where: { id: req.params.id } })
+                        .then(() => res.status(200).json({ message: 'Publication supprimée !' }))
+                )
+        )
         .catch(error => res.status(400).json({ error }));
-      };
+};
