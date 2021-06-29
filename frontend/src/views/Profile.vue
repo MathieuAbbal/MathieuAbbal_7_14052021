@@ -1,37 +1,34 @@
 <template>
-  <div class="home">
-   <LoginForm v-if="!connected"/><!--charge le composant pour s'identifier si session storage est vide -->
-   <Header v-if="connected"/>
-   <NewPost v-if="connected"/> 
-   <Posts v-if="connected"/>
-   
-  </div>
+    <div>
+     <LoginForm v-if="!connected"/>
+     <Header v-if="connected"/>
+     <UserProfile v-if="connected"/>
+     <UserPosts v-if="connected"/>     
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import LoginForm from '@/components/LoginForm.vue';
-import NewPost from '@/components/NewPost.vue';
-import Posts from '@/components/Posts.vue';
 import Header from '@/components/Header.vue';
-
+import UserProfile from '@/components/UserProfile.vue';
+import UserPosts from '@/components/UserPosts.vue';
 
 export default {
-  name: 'Home',
-  components: {
-    LoginForm,
-    Header,
-    Posts,
-    NewPost
-   
-  },
-   data() { 
+    name:'Profile',
+
+    components:{
+        LoginForm,
+        Header,
+        UserProfile,
+        UserPosts
+    },
+    data() {
     return{
       connected: true
     };
   },
 
-  created(){          //hook de création
+  created(){
     this.userConnected()
   },
 
@@ -49,3 +46,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

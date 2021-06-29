@@ -27,10 +27,7 @@ exports.findOneUser = (req, res, next) => {
  */
 exports.modifyUser = (req, res, next) => {
 
-  // vérification que tous les champs sont remplis
-  if (req.body.firstname === null || req.body.firstname === '' || req.body.lastname === null || req.body.lastname === '') {
-    return res.status(400).json({ 'error': "Les champs 'nom' et 'prénom' doivent être remplis " });
-  }
+ 
   // gestion d'ajout/modification image de profil
   const userObject = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
     {
