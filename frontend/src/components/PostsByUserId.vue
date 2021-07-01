@@ -1,8 +1,8 @@
 <template>
 <div class="">     
     <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">
-        <router-link :to="{ name: 'Post', params: { id: post.id } }">
-            <div class="bg-white shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" >            
+        
+            <div class="bg-white shadow-2xl" >            
                 <div class="px-4 py-2 mt-2 bg-white">
                     <h2 class="font-bold text-2xl text-gray-800">{{post.title}}</h2>                
                      <div class=" flex items-center ml-3 mt-8 mb-4">
@@ -10,20 +10,19 @@
                     </div>
                 </div>
             </div>
-        </router-link>    
+           
     </div>
 </div>
 </template>
-
-
 <script>
 import axios from 'axios';
 export default {
-    name: 'UserPosts',
+    name: 'PostByUserId',
 
     data(){
         return{
-            posts: []
+            posts: [],
+            
         }
     },
     mounted(){
@@ -32,8 +31,8 @@ export default {
     methods: {
         getUserPosts(){
             
-            const user_id = JSON.parse(sessionStorage.user).user_id;
-            
+            const user_id = this.user_id;
+
             axios.get(`http://localhost:3000/api/users/${user_id}/posts`,
                 {
                     headers: {
@@ -44,20 +43,8 @@ export default {
             )
             .then(res => this.posts = res.data)
             console.log(this.posts)
-        },
-        deletePost(){
-            const post_id = this.$route.params.id;
-            
-            axios.delete(`http://localhost:3000/api/posts/${post_id}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
-                    }
-                }
-            )
-            .then(console.log('publication supprimer !'));
-        },
+        }
+       
     }
 }
 </script>

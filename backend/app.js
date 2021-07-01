@@ -1,5 +1,6 @@
 //importation express
 const express = require('express');
+const path = require('path');
 //
 const {loadModel}= require('./models/index');
 
@@ -25,7 +26,7 @@ loadModel();
 //permet de décoder une requête encodée en json
 app.use(express.json());
 
-
+app.use('/images', express.static(path.join(__dirname, 'images')));
 //enregistrement des routers
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);

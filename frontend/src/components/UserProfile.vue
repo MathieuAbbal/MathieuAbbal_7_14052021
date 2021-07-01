@@ -33,12 +33,10 @@
       <p class="text-sm text-gray-300">
       <span>Fichier images</span></p>
       <div>
-      <button @click="modifyUser()"  type="submit" class="m-2 px-6 py-3 bg-blue-500 text-white active:bg-red-600 font-bold uppercase text-sm  rounded shadow
-                     focus:shadow-outline hover:bg-blue-600 shadow-lg cursor-pointer transition ease-in duration-300 ">
+      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
                         Mettre à jour le profil
       </button>
-      <button class="m-2 px-6 py-3 bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm  rounded shadow
-                     focus:shadow-outline hover:bg-red-600 shadow-lg cursor-pointer transition ease-in duration-300  " type="button" v-on:click="toggleModal()">
+      <button class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="toggleModal()">
                 supprimer mon compte
       </button>                               
       <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
@@ -141,7 +139,7 @@ export default {
             }
           }
         )
-          .then()
+          
           .then(location.href="/");
     }  
     

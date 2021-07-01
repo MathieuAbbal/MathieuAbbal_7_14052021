@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
    <LoginForm v-if="!connected"/><!--charge le composant pour s'identifier si session storage est vide -->
    <Header v-if="connected"/>
    <NewPost v-if="connected"/> 

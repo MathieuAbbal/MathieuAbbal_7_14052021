@@ -1,32 +1,34 @@
 <template>
-  <div class="">
-    <LoginForm v-if="!connected"/>
-    <Header v-if="connected"/>
-    <ModifyPost v-if="connected"/>
-   
-  </div>
+    <div>
+     <LoginForm v-if="!connected"/>
+     <Header v-if="connected"/>     
+     <AllUsers v-if="connected"/>     
+    </div>
 </template>
 <script>
 import LoginForm from '@/components/LoginForm.vue';
 import Header from '@/components/Header.vue';
-import ModifyPost from '@/components/ModifyPost.vue';
+import AllUsers from '@/components/Users.vue';
 
 
 export default {
-  name: 'Post',
+    name:'Users',
 
-  components: {
-    Header,
-    LoginForm,
-    ModifyPost,
-    
-  },
-
-  data() {
+    components:{
+      Header,
+      LoginForm,       
+      AllUsers 
+        
+      
+    },
+   data() {
     return{
       connected: true
-      
     };
+  },
+
+  created(){
+    this.userConnected()
   },
 
   methods: {
@@ -40,11 +42,6 @@ export default {
         console.log('Utilisateur non connecté !');
       }
     }
-  },
-
-  created(){
-    this.userConnected()
   }
 }
-
 </script>

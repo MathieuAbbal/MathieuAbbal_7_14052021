@@ -1,7 +1,6 @@
 //importation des modèles
 const { Post, Comment, Like } = require('../models/index');
-
-
+//importation du module 'file system' de Node permettant de gérer les téléchargements et modifications d'images
 const fs = require('fs');
 
 /**
@@ -23,7 +22,9 @@ exports.createPost = (req, res, next) => {
     });
     // Enregistrement de l'objet post dans la base de données
     post.save()
+        //envoi une réponse au frontend avec un statut 201 sinon on a une expiration de la requête
         .then(() => res.status(201).json({ message: 'Publication créée !' }))
+        // On ajoute un code erreur en cas de problème
         .catch(error => res.status(400).json({ error }));
 };
 
