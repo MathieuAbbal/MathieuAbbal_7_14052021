@@ -23,7 +23,8 @@ const User = database.define('User', {
     allowNull: false
   },
   avatar: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: `http://localhost:3000/images/profil_default.jpg`
   },
   bio: {
     type: DataTypes.STRING

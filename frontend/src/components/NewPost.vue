@@ -14,7 +14,7 @@
                         <textarea id="newPost-content" type="text" placeholder="Contenu de votre publication..." class="border border-gray-300 p-2 mb-8" required></textarea>                        
                         
                         <label for="newPost-img" class="block text-gray-700 text-sm font-bold mb-2">Insérer une image</label> 
-                        <input type="file" class="p-4">
+                        <input type="file" class="p-4" id="imageurl">
                         <button id="newPost-btn" type="submit" class="cursor-pointer w-full bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" >Publier</button>
                     </form>
                 </div>
@@ -33,31 +33,30 @@ export default {
         return{
             visible: false,
             content: '',
+            imageurl:''
         }
     },
     methods: {
             sendNewPost(){
-                const title = document.getElementById("newPost-title").value;
-                const content = document.getElementById("newPost-content").value;
+                let data = new FormData();
+                data.append(`title`, document.getElementById("newPost-title").value);
+                data.append(`content`, document.getElementById("newPost-content").value);
+                data.append(`image`, document.getElementById("imageurl").files[0]);
 
-                console.log(content);
+                console.log(data);
 
-                axios.post("http://localhost:3000/api/posts/",
-                        {
-                            
-                            title,
-                            content
-                        },
+                axios.post("http://localhost:3000/api/posts/",                                                   
+                        data,                        
                         {
                             headers: {
-                                'Content-Type': 'application/json',
+                              //  'Content-Type': 'application/json',
                                 'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
                             }
                         }
                     )
                     .then( this.visible = false)
-                    .then((res) =>{
-                    this.post = res.data.post,                    
+                    .then((responce) =>{
+                    this.post = responce.data,                    
                     location.href = '/'; //on retourne sur la vue Home
                     
                 }) 

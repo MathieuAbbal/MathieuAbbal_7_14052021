@@ -3,7 +3,8 @@
 
 <div class="m-auto px-4 py-8 max-w-xl">
 	
-	<div class="bg-white shadow-2xl p-8">
+	<div class="bg-white shadow-2xl p-8">    
+      <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="avatar" alt="">     
 		<div class="text-center">
 			<h2 class="mt-5 text-3xl font-bold text-gray-900">
 				Bonjour {{firstname+"!"}}
@@ -19,19 +20,16 @@
         <label class="text-sm font-bold text-gray-500 tracking-wide">Photo de Profil          
         </label>
           <div class="flex items-center justify-center w-full flex-col">
-            <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
-                                                 
+            <label class="flex flex-col rounded-lg border-4 border-dashed w-full p-10 group text-center">                                                 
                <div class="flex flex-col ">
                 <input type="file" name="avatar" id="avatar" class="flex flex-col "  >                                    
                 <!-- Input text lié à une variable de vuejs pour le texte alternatif de l'image -->
                 <input type="text" name="" id="" >                                    
-              </div> 
-              
+              </div>               
             </label>
           </div>
       </div>
-      <p class="text-sm text-gray-300">
-      <span>Fichier images</span></p>
+      
       <div>
       <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
                         Mettre à jour le profil
@@ -124,17 +122,15 @@ export default {
       this.showModal = !this.showModal;
     },
     modifyUser(){
-      const bio = document.getElementById("bio").value
-      const avatar = document.getElementById("avatar").value
+      let data= new FormData();
+      data.append(`bio`,  document.getElementById("bio").value);
+      data.append(`image`, document.getElementById("avatar").files[0]);
 
       axios.put("http://localhost:3000/api/users/"+ JSON.parse(sessionStorage.user).user_id,
-          {
-            bio,
-            avatar
-          },
+         data,
           {
             headers: {
-              'Content-Type': 'application/json',
+              
               'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
             }
           }

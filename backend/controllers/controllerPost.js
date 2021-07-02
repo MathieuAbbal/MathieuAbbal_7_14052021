@@ -1,7 +1,7 @@
 //importation des modèles
 const { Post, Comment, Like } = require('../models/index');
 //importation du module 'file system' de Node permettant de gérer les téléchargements et modifications d'images
-const fs = require('fs');
+const fs = require('fs');//pour supprimer les fichiers images
 
 /**
  * Ajout d'une nouvelle publication
@@ -12,20 +12,26 @@ exports.createPost = (req, res, next) => {
     if (req.body.title === null || req.body.title === '' || req.body.content === null || req.body.content === '') {
         return res.status(400).json({ 'error': "Veuillez remplir les champs 'titre' et 'contenu' pour créer un article" });
     }
-    const postObject = req.body;
-
-    // Création d'un nouvel objet post
+  //  const postObjet = req.body;
+    const postObjet = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
+    {
+      ...req.body.post,//opérateur spread pour faire une copie de la variable
+      imageurl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { ...req.body };
+    // Création d'un nouvel objet post (instance du modèle)
     const post = new Post({
-        ...postObject,
-        user_id: req.token.user_id//opérateur spread pour faire une copie de la variable
-
+        //copie les champs du corps de la requête
+        ...postObjet,//opérateur spread pour faire une copie de la variable
+        user_id: req.token.user_id,
+        imageurl: req.body.imageurl
+        
     });
     // Enregistrement de l'objet post dans la base de données
     post.save()
         //envoi une réponse au frontend avec un statut 201 sinon on a une expiration de la requête
         .then(() => res.status(201).json({ message: 'Publication créée !' }))
         // On ajoute un code erreur en cas de problème
-        .catch(error => res.status(400).json({ error }));
+       .catch(error => res.status(400).json({ error }));
 };
 
 /**

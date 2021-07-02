@@ -29,6 +29,7 @@ exports.modifyUser = (req, res, next) => {
 
  
   // gestion d'ajout/modification image de profil
+ 
   const userObject = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
     {
       ...req.body.user,//opérateur spread pour faire une copie de la variable
@@ -36,7 +37,7 @@ exports.modifyUser = (req, res, next) => {
     } : { ...req.body };
 
   User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
-    .then(() => res.status(200).json({ message: 'Utilisateur modifié !' }))
+    .then(() => res.status(200).json({ message: 'Utilisateur modifié !' }))    
     .catch(error => res.status(400).json({ error }));
 };
 /**

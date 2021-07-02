@@ -5,7 +5,7 @@
             <div class="px-4 py-2 mt-2 bg-white">
                 <div class="user flex items-center mb-2 ">
                     <div class="user-logo">
-                        <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" src="post.User.avatar" alt="">
+                        <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="post.User.avatar" alt="">
                     </div>                    
                     <div class='flex text-gray-700 text-sm '>
                         <div class="pr-3">Posté le {{dateFormat(post.createdAt)}}
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <img src="">  
+                <img v-bind:src="post.imageurl">  
                 <h2 class="font-bold text-2xl text-gray-800">{{post.title}}</h2>
                 <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>
                 
