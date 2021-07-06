@@ -4,7 +4,8 @@
         <router-link :to="{ name: 'Post', params: { id: post.id } }">
             <div class="bg-white shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" >            
                 <div class="px-4 py-2 mt-2 bg-white">
-                    <h2 class="font-bold text-2xl text-gray-800">{{post.title}}</h2>                
+                    <h2 class="p-4 font-bold text-2xl text-gray-800">{{post.title}}</h2>   
+                    <img v-bind:src="post.imageurl" class="w-full">               
                      <div class=" flex items-center ml-3 mt-8 mb-4">
                        <p> {{post.content}}  </p>        
                     </div>
@@ -51,7 +52,7 @@ export default {
             axios.delete(`http://localhost:3000/api/posts/${post_id}`,
                 {
                     headers: {
-                        'Content-Type': 'application/json',
+                      //  'Content-Type': 'application/json',
                         'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
                     }
                 }

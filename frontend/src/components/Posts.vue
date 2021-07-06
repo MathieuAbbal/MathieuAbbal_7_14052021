@@ -1,6 +1,7 @@
 <template>
 <div>      
-    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">
+    
+    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">        
         <div class="bg-white shadow-2xl" >          
             <div class="px-4 py-2 mt-2 bg-white">
                 <div class="user flex items-center mb-2 ">
@@ -14,8 +15,8 @@
                         </div>
                     </div>
                 </div>
-                <img v-bind:src="post.imageurl">  
-                <h2 class="font-bold text-2xl text-gray-800">{{post.title}}</h2>
+                <h2 class="p-4 font-bold text-2xl text-gray-800">{{post.title}}</h2>
+                <img v-bind:src="post.imageurl" class="w-full rounded-t-lg">                  
                 <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>
                 
             </div>

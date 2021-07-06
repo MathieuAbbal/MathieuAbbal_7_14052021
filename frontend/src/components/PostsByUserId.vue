@@ -1,6 +1,6 @@
 <template>
-<div class="">     
-    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">
+<div class="test">     
+    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts" :key="post.id">
         
             <div class="bg-white shadow-2xl" >            
                 <div class="px-4 py-2 mt-2 bg-white">
@@ -31,9 +31,9 @@ export default {
     methods: {
         getUserPosts(){
             
-            const user_id = this.user_id;
+            //const userId = this.posts.user.id;
 
-            axios.get(`http://localhost:3000/api/users/${user_id}/posts`,
+            axios.get(`http://localhost:3000/api/users/6/posts`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -41,8 +41,10 @@ export default {
                     }
                 }
             )
-            .then(res => this.posts = res.data)
-            console.log(this.posts)
+            .then(res => {
+                this.posts = res.data.posts;
+                console.log(this.posts)
+            })
         }
        
     }

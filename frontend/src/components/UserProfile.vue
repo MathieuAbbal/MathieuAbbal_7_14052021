@@ -1,10 +1,9 @@
 <template>
   
 
-<div class="m-auto px-4 py-8 max-w-xl">
-	
+<div class="m-auto px-4 py-8 max-w-xl">	
 	<div class="bg-white shadow-2xl p-8">    
-      <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="avatar" alt="">     
+    <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="avatar" alt="">     
 		<div class="text-center">
 			<h2 class="mt-5 text-3xl font-bold text-gray-900">
 				Bonjour {{firstname+"!"}}
@@ -12,29 +11,29 @@
 			<p class="mt-2 text-sm text-gray-400">Vous pouvez modifié votre description et votre image de profil .</p>
 		</div>
     <form class="mt-8 space-y-3" action="" method="">
-      <div class="grid grid-cols-1 space-y-2">
+      <div class="flex flex-col ">
         <label class="text-sm font-bold text-gray-500 tracking-wide" html-for="user-bio">description</label>
-        <textarea id="bio" class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" type="" placeholder="Votre description"></textarea>
+        <textarea id="bio" class="m-8 p-2 p lg:h-36 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" type="" placeholder="Votre description"></textarea>
       </div>
-      <div class="grid grid-cols-1 space-y-2">
-        <label class="text-sm font-bold text-gray-500 tracking-wide">Photo de Profil          
-        </label>
-          <div class="flex items-center justify-center w-full flex-col">
-            <label class="flex flex-col rounded-lg border-4 border-dashed w-full p-10 group text-center">                                                 
-               <div class="flex flex-col ">
-                <input type="file" name="avatar" id="avatar" class="flex flex-col "  >                                    
-                <!-- Input text lié à une variable de vuejs pour le texte alternatif de l'image -->
-                <input type="text" name="" id="" >                                    
-              </div>               
+          <div class="m-4 flex justify-center transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ">
+            <label class="text-sm font-bold text-gray-500  w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide  border border-blue cursor-pointer hover:bg-blue ">
+              <svg class="w-8 h-8 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+              </svg>
+              <span class="mt-2 text-base leading-normal">Choisir un fichier</span>
+              <input type='file' class="hidden" name="avatar" id="avatar" @change="onFileChange" />
+                <div id="preview" class=" object-cover  mx-4  shadow">
+                  <img v-if="avatar" :src="avatar" class="flex"  />
+                </div>
             </label>
           </div>
-      </div>
+      
       
       <div>
-      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
+      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
                         Mettre à jour le profil
       </button>
-      <button class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="toggleModal()">
+      <button class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="toggleModal()">
                 supprimer mon compte
       </button>                               
       <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
@@ -80,9 +79,10 @@ export default {
         return{
             firstname:"",
             lastname:"",
-            avatar:"",
+            avatar: null,
             bio:"",
             showModal: false,
+            
             
            
         }   
@@ -129,15 +129,19 @@ export default {
       axios.put("http://localhost:3000/api/users/"+ JSON.parse(sessionStorage.user).user_id,
          data,
           {
-            headers: {
-              
+            headers: {              
               'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
             }
           }
-        )
-          
+        )          
           .then(location.href="/");
-    }  
+    },
+    //affichage de la photo de profil
+    onFileChange(e) {//methode qui prend un événement comme argument
+      const file = e.target.files[0];//qui est déclenché par l'entrée d'un fichier unique
+      this.avatar = URL.createObjectURL(file);//créer une URL d'objet pour ce fichier local
+    }
+  
     
   
   }

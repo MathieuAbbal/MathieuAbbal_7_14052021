@@ -12,18 +12,18 @@ exports.createPost = (req, res, next) => {
     if (req.body.title === null || req.body.title === '' || req.body.content === null || req.body.content === '') {
         return res.status(400).json({ 'error': "Veuillez remplir les champs 'titre' et 'contenu' pour créer un article" });
     }
-  //  const postObjet = req.body;
-    const postObjet = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
+   
+     postObjet = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
     {
-      ...req.body.post,//opérateur spread pour faire une copie de la variable
+      ...req.body,//opérateur spread pour faire une copie de la variable
       imageurl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
     // Création d'un nouvel objet post (instance du modèle)
     const post = new Post({
         //copie les champs du corps de la requête
         ...postObjet,//opérateur spread pour faire une copie de la variable
-        user_id: req.token.user_id,
-        imageurl: req.body.imageurl
+        user_id: req.token.user_id
+        
         
     });
     // Enregistrement de l'objet post dans la base de données
@@ -85,16 +85,14 @@ exports.findPostsByUserId = (req, res, next) => {
  */
 exports.modifyPost = (req, res, next) => {
     //Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux
-    Post.findOne({
-        where: { id: req.params.id }
-    }) //objet de comparaison avec opérateur de sélection        
+    Post.findOne({where: { id: req.params.id } }) //objet de comparaison avec opérateur de sélection        
 
         .then(post => {
             if (post.user_id === req.token.user_id) {
                 const postObject = req.file ?//on regarde si il y a un fichier dans la requête
                     {
-                        ...req.body.post,
-                        imageurl: req.file.filename
+                        ...req.body,
+                        imageurl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
                     } : { ...req.body };
                 Post.update({ ...postObject, id: req.params.id }, { where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'Publication modifiée !' }))
@@ -113,13 +111,19 @@ exports.modifyPost = (req, res, next) => {
  * @requête {DELETE}/api/posts/:id
  */
 exports.deletePost = (req, res, next) => {
-    Like.destroy({ where: { post_id: req.params.id } })
-        .then(() =>
-            Comment.destroy({ where: { post_id: req.params.id } })
-                .then(() =>
-                    Post.destroy({ where: { id: req.params.id } })
-                        .then(() => res.status(200).json({ message: 'Publication supprimée !' }))
-                )
-        )
-        .catch(error => res.status(400).json({ error }));
+    Post.findOne({where: {id: req.params.id}})
+    .then(post => {
+        if (post.imageurl !== null) {
+            const filename = post.imageurl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => { 
+            Post.destroy({ where: {id: req.params.id} }) 
+                .then(() => res.status(200).json({ message: 'Post supprimé !'}))
+                .catch(error => res.status(400).json({ error }));
+            });
+        }
+        Post.destroy({ where: {id: req.params.id} })
+            .then(() => res.status(200).json({ message: 'Post supprimé !'}))
+            .catch(error => res.status(400).json({ error }));
+    })
+    .catch(error => res.status(400).json({ message: "Post introuvable", error: error }))
 };
