@@ -86,7 +86,6 @@ exports.findPostsByUserId = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
     //Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux
     Post.findOne({where: { id: req.params.id } }) //objet de comparaison avec opérateur de sélection        
-
         .then(post => {
             if (post.user_id === req.token.user_id) {
                 const postObject = req.file ?//on regarde si il y a un fichier dans la requête

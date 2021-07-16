@@ -1,11 +1,12 @@
 <template>
-<div>      
-    
-    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">        
+<div>   
+      
+    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">  
+         
         <div class="bg-white shadow-2xl" >          
             <div class="px-4 py-2 mt-2 bg-white">
-                <div class="user flex items-center mb-2 ">
-                    <div class="user-logo">
+                <div class="flex items-center justify-between m-2 mb-2 ">
+                    <div class="">
                         <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="post.User.avatar" alt="">
                     </div>                    
                     <div class='flex text-gray-700 text-sm '>
@@ -13,14 +14,21 @@
                         </div> 
                         <div>par <span class="text-red-400">{{post.User.firstname}}</span>
                         </div>
+                    </div> 
+                    <div class="flex">                   
+                    <svg class=" justify-items-end h-8 w-8 text-red hover:fill-current hover:text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth=2 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
                     </div>
                 </div>
                 <h2 class="p-4 font-bold text-2xl text-gray-800">{{post.title}}</h2>
                 <img v-bind:src="post.imageurl" class="w-full rounded-t-lg">                  
-                <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>
-                
+                <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>                
             </div>
-        </div>
+            <Comments :post="post"></Comments>
+        </div> 
+              
     </div>          
 </div> 
     
@@ -28,16 +36,26 @@
 
 </template>
 <script>
+import Comments from './Comments.vue';
 import axios from 'axios';
 export default {
     
-    name: 'Posts',
+    name: 'AllPosts',
     
+    props:{
+        user:{
+            type:Object
+        },
+        post:{
+          type:Object
+      }
+    },
     
     data(){
         return {
-            posts: []
-            
+           posts: [],
+           user_id: JSON.parse(sessionStorage.user).user_id,
+         
         }
     },
        
@@ -66,7 +84,12 @@ export default {
             const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 
             return event.toLocaleDateString('fr-FR', options);
-        }
+        },
+        
+    },
+
+    components:{
+        Comments
     } 
 }
    

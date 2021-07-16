@@ -24,7 +24,7 @@
                 <button class="cursor-pointer m-2 bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="modifyOnePost()"  >Publier les modifications</button>
                 <button class="cursor-pointer m-2 bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" v-on:click="toggleModal()" >Supprimer le post</button>
             </div>
-            <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+            <div v-if="visible" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
                 <div class="relative w-auto my-6 mx-auto max-w-sm">                 
                   <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">                    
                      <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
@@ -37,15 +37,16 @@
                          <button class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
                         Annuler
                        </button>
-                       <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="deleteOnePost()">
+                       <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" @click="deleteOnePost()">
                          Supprimer
                         </button>
                      </div>
                    </div>
-                  </div>
-            </div>
-            <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div> 
+                  </div>                  
+            </div> 
+            <div v-if="visible" class="opacity-25 fixed inset-0 z-40 bg-black"></div>           
         </form>
+         
     </div>            
 </template>
 
@@ -59,10 +60,8 @@ export default{
         return{
             modifiedContent:'',
             post:[],
-            showModal:false,
-            imageurl:'',
-            authorized:false,
-            modify: false
+            visible: false,
+            imageurl:'',            
             
         }
     },
@@ -82,7 +81,7 @@ export default{
             }
         )
         .then(res => this.post = res.data)
-            console.log(this.post)
+          //  console.log(this.post)
             
         
          
@@ -93,7 +92,7 @@ export default{
             axios.delete(`http://localhost:3000/api/posts/${post_id}`,
             { 
                 headers: {
-                  
+                  'Content-Type': 'application/json',
                     'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
                 }
             }
@@ -101,10 +100,6 @@ export default{
         .then(location.href = "/")
         },
         modifyOnePost(){
-         /*   const post_id = this.$route.params.id;
-            const title = document.getElementById('modify-title').value;
-            const content = document.getElementById('modify-content').value;
-            const imageurl = document.getElementById('')*/
             const post_id = this.$route.params.id;
             let data = new FormData();
                 data.append(`title`, document.getElementById("modify-title").value);
@@ -119,16 +114,16 @@ export default{
                 }
             }
         )
-        .then(location.href = "/Home");
+        .then(location.href = "/");
         },
         toggleModal(){
-            this.showModal = !this.showModal;
+            this.visible = !this.visible;
         },
-        //affichage de la photo de profil
+        //affichage de la photo du post
         onFileChange(e) {//methode qui prend un événement comme argument
         const file = e.target.files[0];//qui est déclenché par l'entrée d'un fichier unique
         this.imageurl = URL.createObjectURL(file);//créer une URL d'objet pour ce fichier local
-    }
+        }
     }
 }
 </script>

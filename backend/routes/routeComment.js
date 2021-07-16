@@ -13,6 +13,8 @@ const auth = require('../middelware/auth')
 router.post('/', auth, commentCtrl.createComment);
 //route pour récupérer un commentaire d'une publication
 router.get('/:id', auth, commentCtrl.findOneComment);
+//route pour réupérer tous les commentaire d'une publication
+router.get('/', auth, commentCtrl.findAllComments)
 //route pour supprimer un commentaire
 router.delete('/:id', auth, commentCtrl.deleteComment);
 

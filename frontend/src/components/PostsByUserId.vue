@@ -4,7 +4,9 @@
         
             <div class="bg-white shadow-2xl" >            
                 <div class="px-4 py-2 mt-2 bg-white">
+                    
                     <h2 class="font-bold text-2xl text-gray-800">{{post.title}}</h2>                
+                     <img v-bind:src="post.imageurl" class="w-full"> 
                      <div class=" flex items-center ml-3 mt-8 mb-4">
                        <p> {{post.content}}  </p>        
                     </div>
@@ -22,6 +24,7 @@ export default {
     data(){
         return{
             posts: [],
+            user_id:''
             
         }
     },
@@ -31,9 +34,9 @@ export default {
     methods: {
         getUserPosts(){
             
-            //const userId = this.posts.user.id;
+         //   const user_id = this.posts.user_id;
 
-            axios.get(`http://localhost:3000/api/users/6/posts`,
+            axios.get(`http://localhost:3000/api/users/${this.$route.params.id}/posts`,
                 {
                     headers: {
                         'Content-Type': 'application/json',

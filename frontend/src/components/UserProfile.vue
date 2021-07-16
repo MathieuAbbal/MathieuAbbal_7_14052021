@@ -2,7 +2,7 @@
   
 
 <div class="m-auto px-4 py-8 max-w-xl">	
-	<div class="bg-white shadow-2xl p-8">    
+	<div class="m-auto bg-white shadow-2xl p-8">    
     <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="avatar" alt="">     
 		<div class="text-center">
 			<h2 class="mt-5 text-3xl font-bold text-gray-900">
@@ -30,37 +30,36 @@
       
       
       <div>
-      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
+      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
                         Mettre à jour le profil
       </button>
-      <button class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="toggleModal()">
+      <button type="button" v-on:click="toggleModal()" class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10" >
                 supprimer mon compte
       </button>                               
-      <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-                <div class="relative w-auto my-6 mx-auto max-w-sm">                 
-                  <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">                    
-                     <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                       <h3 class="text-3xl font-semibold">Etes-vous sûr de vouloir supprimer votre compte?</h3>
-                       <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
-                         <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
-                        </button>
-                      </div>                 
-                      <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                         <button class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
-                        Annuler
-                       </button>
-                       <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"   @click="deleteUser()">
-                         Supprimer
-                        </button>
-                     </div>
-                   </div>
-                  </div>
+      <div v-if="visible" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-sm">                 
+          <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">                    
+              <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                <h3 class="text-3xl font-semibold">Etes-vous sûr de vouloir supprimer votre compte?</h3>
+                <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
+                <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
+                </button>
+              </div>                 
+              <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                <button class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
+                 Annuler
+                </button>
+                <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" @click="deleteUser()">
+                Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>       
       </div>
-      <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div> 
-      </div>       
+      <div v-if="visible" class="opacity-25 fixed inset-0 z-40 bg-black"></div>      
     </form>
-	</div>
- 
+	</div> 
 </div>
   
 
@@ -81,7 +80,7 @@ export default {
             lastname:"",
             avatar: null,
             bio:"",
-            showModal: false,
+            visible: false,
             
             
            
@@ -119,7 +118,7 @@ export default {
         .then(location.href="/");
     },
     toggleModal(){
-      this.showModal = !this.showModal;
+      this.visible = !this.visible;
     },
     modifyUser(){
       let data= new FormData();

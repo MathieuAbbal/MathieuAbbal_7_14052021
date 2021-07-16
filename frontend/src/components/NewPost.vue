@@ -27,8 +27,9 @@
                  <!--       <input type="file" class="p-4" id="imageurl">-->
                         <button id="newPost-btn" type="submit" class="cursor-pointer w-full bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" >Publier</button>
                     </form>
-                </div>
+                </div>               
             </div>
+            
         
     </div>   
 </template>

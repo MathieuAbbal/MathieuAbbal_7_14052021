@@ -31,15 +31,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/posts', postRoute);
-app.use('/api/comments',commentRoute);
+app.use('/api/posts/:id/comments',commentRoute);
 app.use('/api/likes', likeRoute);
-/*
-app.use((req, res) => {
-  res.json({ message: 'la requête de mathieu a bien été reçue !' });
-})
-*/
-
-
 
 
 module.exports = app;

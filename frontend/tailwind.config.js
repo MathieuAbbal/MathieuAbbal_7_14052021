@@ -9,3 +9,19 @@ module.exports = {
   },
   plugins: [],
 }
+
+const colors = require('tailwindcss/colors')
+
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        
+      },
+    },
+  },
+  variants: {
+    fill: ['hover', 'focus'], // this line does the trick
+  },
+  plugins: [],
+}
