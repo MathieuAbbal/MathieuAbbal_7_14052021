@@ -1,7 +1,10 @@
 //importation express
 const express = require('express');
+//importation du package pour avoir accès au chemin du fichier
 const path = require('path');
-//
+//importation de helmet (securité des entête HTTP)
+const helmet = require("helmet");
+//importation des models
 const {loadModel}= require('./models/index');
 
 // Création d'une application express
@@ -25,7 +28,7 @@ app.use((req, res, next) => {
 loadModel();
 //permet de décoder une requête encodée en json
 app.use(express.json());
-
+app.use(helmet());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 //enregistrement des routers
 app.use('/api/auth', authRoute);
