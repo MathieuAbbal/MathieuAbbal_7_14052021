@@ -11,7 +11,7 @@
                         <label for="newPost-title" class="block text-gray-700 text-sm font-bold mb-2">Titre</label>
                         <input id="newPost-title" type="text" placeholder="Titre de votre post..." class="border border-gray-300 p-2" required>
                         <label for="newPost-content" class="block text-gray-700 text-sm font-bold mb-2">Contenu</label> 
-                        <textarea id="newPost-content" type="text" placeholder="Contenu de votre publication..." class="border border-gray-300 p-2 mb-8" required></textarea>                                                
+                        <textarea id="newPost-content" type="text" placeholder="Contenu de votre publication..." class="md:h-56 border border-gray-300 p-2 mb-8" required></textarea>                                                
                         <div class="m-4 flex justify-center transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ">
                             <label for="imageurl" class="text-sm font-bold text-gray-500  w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide  border border-blue cursor-pointer hover:bg-blue ">
                                 <svg class="w-8 h-8 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

@@ -1,18 +1,18 @@
 <template>
-<div>   
-      
-    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">  
-         
+<div>       
+ 
+  
+    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">
         <div class="bg-white shadow-2xl" >          
             <div class="px-4 py-2 mt-2 bg-white">
                 <div class="flex items-center justify-between m-2 mb-2 ">
                     <div class="">
-                        <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="post.User.avatar" alt="">
+                        <img class="w-6 h-6 sm:w-10 sm:h-10 object-cover rounded-full md:mx-4  shadow" v-bind:src="post.User.avatar" alt="photo de profil">
                     </div>                    
                     <div class='flex text-gray-700 text-sm '>
-                        <div class="pr-3">Posté le {{dateFormat(post.createdAt)}}
+                        <div class="text-xs md:text-base pr-3">Posté le {{dateFormat(post.createdAt)}}
                         </div> 
-                        <div>par <span class="text-red-400">{{post.User.firstname}}</span>
+                        <div class="text-xs md:text-base">par <span class="text-red-400 ">{{post.User.firstname}}</span>
                         </div>
                     </div> 
                     <div class="flex">                   
@@ -24,12 +24,14 @@
                 </div>
                 <h2 class="p-4 font-bold text-2xl text-gray-800">{{post.title}}</h2>
                 <img v-bind:src="post.imageurl" class="w-full rounded-t-lg">                  
-                <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>                
+                <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>               
             </div>
             <Comments :post="post"></Comments>
         </div> 
-              
-    </div>          
+        <div><div id="cRetour" class="cInvisible rounded-xl "></div></div>  
+        
+    </div> 
+             
 </div> 
     
   
@@ -48,14 +50,17 @@ export default {
         },
         post:{
           type:Object
-      }
+      },
+     
+      
     },
     
     data(){
         return {
            posts: [],
            user_id: JSON.parse(sessionStorage.user).user_id,
-         
+           isAdmin: JSON.parse(sessionStorage.user).isAdmin,
+            
         }
     },
        
@@ -78,6 +83,21 @@ export default {
         })
         .catch (error => console.log(error))
       },
+
+      deletePost(){
+        const post_id = this.data.id;               
+            axios.delete(`http://localhost:3000/api/posts/${post_id}`,
+                {
+                    headers: {
+                     //   'Content-Type': 'application/json',
+                        'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
+                    }
+                }
+            )
+            .then(this.getUserPosts())
+            .then(window.location.reload())
+        },
+
       dateFormat(date){
             const event = new Date(date);
 
@@ -92,7 +112,7 @@ export default {
         Comments
     } 
 }
-   
+ 
 
 
 </script>

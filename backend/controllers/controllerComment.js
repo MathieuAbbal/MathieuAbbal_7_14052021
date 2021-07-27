@@ -48,7 +48,7 @@ exports.findAllComments = (req, res, next) => {
         })
         .then(comments => {
             res.status(200).json(comments)
-            console.log(comments);
+          //  console.log(comments);
             })
             .catch(error => res.status(503).json({ error }));
     })

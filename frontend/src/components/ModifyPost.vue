@@ -24,7 +24,8 @@
                 <button class="cursor-pointer m-2 bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="modifyOnePost()"  >Publier les modifications</button>
                 <button class="cursor-pointer m-2 bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" v-on:click="toggleModal()" >Supprimer le post</button>
             </div>
-            <div v-if="visible" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+            <!-- modale suppression publication -->
+            <div v-show="visible" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
                 <div class="relative w-auto my-6 mx-auto max-w-sm">                 
                   <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">                    
                      <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
@@ -44,7 +45,8 @@
                    </div>
                   </div>                  
             </div> 
-            <div v-if="visible" class="opacity-25 fixed inset-0 z-40 bg-black"></div>           
+            <div v-show="visible" class="opacity-25 fixed inset-0 z-40 bg-black"></div> 
+            <!-- fin de la modale -->          
         </form>
          
     </div>            
@@ -61,7 +63,8 @@ export default{
             modifiedContent:'',
             post:[],
             visible: false,
-            imageurl:'',            
+            imageurl:'',  
+            title:''          
             
         }
     },
@@ -93,11 +96,11 @@ export default{
             { 
                 headers: {
                   'Content-Type': 'application/json',
-                    'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
+                  'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
                 }
             }
         )
-        .then(location.href = "/")
+        .then(location.href="/");
         },
         modifyOnePost(){
             const post_id = this.$route.params.id;
@@ -110,7 +113,8 @@ export default{
               data,
             { 
                 headers: {
-                  'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
                 }
             }
         )

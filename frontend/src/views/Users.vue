@@ -2,7 +2,8 @@
     <div>
      <LoginForm v-if="!connected"/>
      <Header v-if="connected"/>     
-     <AllUsers v-if="connected"/>     
+     <AllUsers v-if="connected"/>   
+     
     </div>
 </template>
 <script>
@@ -17,13 +18,15 @@ export default {
     components:{
       Header,
       LoginForm,       
-      AllUsers 
+      AllUsers
+      
         
       
     },
    data() {
     return{
-      connected: true
+      connected: true,
+      
     };
   },
 

@@ -3,13 +3,14 @@
     <LoginForm v-if="!connected"/>
     <Header v-if="connected"/>
     <ModifyPost v-if="connected"/>
-   
+<!--    <Comments v-if="connected"/>-->
   </div>
 </template>
 <script>
 import LoginForm from '@/components/LoginForm.vue';
 import Header from '@/components/Header.vue';
 import ModifyPost from '@/components/ModifyPost.vue';
+//import Comments from '@/components/Comments.vue'
 
 
 export default {
@@ -19,6 +20,7 @@ export default {
     Header,
     LoginForm,
     ModifyPost,
+  //  Comments
     
   },
 

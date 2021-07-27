@@ -1,10 +1,9 @@
 <template>
   <div>
    <LoginForm v-if="!connected"/><!--charge le composant pour s'identifier si session storage est vide -->
-   <Header v-if="connected"/>
-   <NewPost v-if="connected"/> 
-<!--   <div v-if="connected"><AllPosts v-for="post in posts" :key="post" :post="post"/></div>-->
- <AllPosts v-if="connected"/>
+   <Header v-if="connected"/>   
+   <NewPost v-if="connected"/>    
+   <AllPosts v-if="connected"/> 
    
   </div>
 </template>
@@ -15,6 +14,8 @@ import LoginForm from '@/components/LoginForm.vue';
 import NewPost from '@/components/NewPost.vue';
 import AllPosts from '@/components/AllPosts.vue';
 import Header from '@/components/Header.vue';
+
+
 //import axios from 'axios';
 
 export default {
@@ -23,23 +24,23 @@ export default {
     LoginForm,
     Header,
     AllPosts,
-    NewPost
+    NewPost,
+    
     
    
   },
    data() { 
     return{
     connected: true,
-  //  posts:[],
+    posts:[],
   //  user_id: JSON.parse(sessionStorage.user).user_id,
     };
   },
 
   created(){          //hook de création
     this.userConnected()
- //  this.getAllPosts()
-  },
-  
+ 
+  }, 
     
 
   methods: {
@@ -53,21 +54,7 @@ export default {
         console.log('Utilisateur non connecté !');
       }
     },
-  /*    getAllPosts(){
-        fetch("http://localhost:3000/api/posts",
-            {
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
-                }
-            }
-        )
-        .then(res =>{
-                this.posts = JSON.stringify(res) ;
-                console.log(this.posts)
-        })
-        .catch (error => console.log(error))
-      }*/
+ 
   }
 }
 </script>
