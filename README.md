@@ -1,4 +1,4 @@
-![logo](https://user-images.githubusercontent.com/72860893/127312216-b6301108-2e56-4ec9-94be-7ece74ace96c.png)
+![logo-removebg-preview](https://user-images.githubusercontent.com/72860893/127324350-cb329aef-4309-4faf-9986-a4e1ae64641c.png)
 # Projet 7 de la formation de developpeur Web chez **OpenClassrooms**  
 ## Scénario
 Création d'un réseau social d'entreprise pour Groupomania (une socièté fictive).  
@@ -51,3 +51,5 @@ lancement du serveur
 ou  nodemon
 ```
 Le serveur doit fonctionner sur "localhost" avec le port par défaut "3000".
+
+### Pour la base de donnée
