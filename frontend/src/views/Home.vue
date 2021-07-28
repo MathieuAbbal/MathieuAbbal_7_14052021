@@ -16,6 +16,7 @@ import AllPosts from '@/components/AllPosts.vue';
 import Header from '@/components/Header.vue';
 
 
+
 //import axios from 'axios';
 
 export default {
@@ -27,14 +28,14 @@ export default {
     NewPost,
     
     
+    
    
   },
    data() { 
     return{
     connected: true,
     posts:[],
-  //  user_id: JSON.parse(sessionStorage.user).user_id,
-    };
+    }
   },
 
   created(){          //hook de création

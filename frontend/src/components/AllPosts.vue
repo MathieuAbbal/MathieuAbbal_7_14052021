@@ -1,6 +1,5 @@
 <template>
 <div>       
- 
   
     <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">
         <div class="bg-white shadow-2xl" >          

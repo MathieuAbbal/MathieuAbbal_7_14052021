@@ -11,7 +11,13 @@
 
 <script>
 export default {
-  Name: "Welcome"
+  Name: "Welcome",
+
+  data(){
+        return{
+            posts : []
+        }
+    }
 }
 </script>
 

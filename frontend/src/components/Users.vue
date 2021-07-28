@@ -7,9 +7,7 @@
                     <h2 class="text-gray-800 text-3xl font-semibold flex justify-center items-center flex-grow">{{user.firstname}}</h2>
                     <img class="w-20 h-20 object-cover rounded-full " v-bind:src="user.avatar" alt="photo de profil">
                 </div>
-            <p class="">{{ user.bio }}</p>
-            
-                   
+            <p class="">{{ user.bio }}</p>              
       </router-link>
     </div>   
 </div>

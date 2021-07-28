@@ -22,7 +22,7 @@
                     <input class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
                     id="signup-lastname"
                     type="text"
-                    placeholder="Votre prénom" required/>
+                    placeholder="Votre nom" required/>
                 </div>
                 <div class="mb-4 mt-6">
                     <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="signup-email">Email</label>

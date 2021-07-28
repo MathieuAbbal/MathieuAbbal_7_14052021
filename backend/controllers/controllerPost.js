@@ -76,8 +76,10 @@ exports.findPostsByUserId = (req, res, next) => {
             ['createdAt', 'DESC'],
         ]
     })
-        .then(posts => { res.status(200).json({ posts }) })
-        .catch(error => res.status(400).json({ error }));
+    .then(posts => {
+        res.status(200).json({ posts });
+    })
+    .catch(error => res.status(400).json({ error }));
 };
 /**
  * Modifie une publication
