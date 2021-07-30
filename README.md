@@ -33,7 +33,7 @@ Clonez le repository
 
 Vous devez avoir MySQL installé sur votre machine.
 Vous devrez vérifier que le nom d'utilisateur et le mot de passe correspondent à vos informations d'identification MySQL locales.
-(dans le dossier config puis le fichier config.json)
+(dans le fichier config.json qui se trouve dans le dossier config)
 
 Vous devez créer un fichier ```.env``` dans le dossier backend.
 
@@ -50,11 +50,11 @@ Y importer le fichier ```database_development.sql``` (qui se trouve dans le doss
 
 Pour vous connecté avec les droits d'administration:
 
-       Email ```admin@mail.com```
-Mot de Passe ```admin```
+    Email ```admin@mail.com```  
+    Mot de Passe ```admin```
 -----
+### Pour la partie frontend    
 Ouvrir votre terminal à la racine du projet
-### Pour la partie frontend  
 Installation des dépendences:
 ```
     cd frontend
