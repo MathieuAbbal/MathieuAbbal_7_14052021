@@ -1,4 +1,3 @@
-![logo-removebg-preview](https://user-images.githubusercontent.com/72860893/127324350-cb329aef-4309-4faf-9986-a4e1ae64641c.png)
 # Projet 7 de la formation de developpeur Web chez **OpenClassrooms**  
 ## Scénario
 Création d'un réseau social d'entreprise pour Groupomania (une socièté fictive).  
@@ -49,10 +48,9 @@ Créez une base de données nommée ```database_development```
 Y importer le fichier ```database_development.sql``` (qui se trouve dans le dossier backend)
 
 Pour vous connecté avec les droits d'administration:
-
     Email ```admin@mail.com```  
-    Mot de Passe ```admin```
------
+    Mot de Passe ```admin```  
+
 ### Pour la partie frontend    
 Ouvrir votre terminal à la racine du projet
 Installation des dépendences:
