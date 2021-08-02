@@ -75,7 +75,14 @@ lancement du serveur
     node server
 ou  nodemon
 ```
-Le serveur doit fonctionner sur "localhost" avec le port par défaut "3000".
+Le serveur doit fonctionner sur "localhost" avec le port par défaut "3000".  
+## Documentation  
 
+- [Specs Groupomania](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Specs_FR_DWJ_VF.pdf)
 
+- [Guidelines API](https://docs.google.com/spreadsheets/d/1BfpuqTKowLgN8UCJKqP31VnYWhotR0pF4Kjd7QdE8T4/edit?usp=sharing)  
+
+- [Base de donnée MySQL Groupomania](https://docs.google.com/spreadsheets/d/1t_zl2QYMNdrqLJOQsk6VaDG1qoQEUeoTCdlDsAuto3s/edit?usp=sharing)  
+
+- [Documentation Postman](https://documenter.getpostman.com/view/15223026/Tzscomr7)
 
