@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `avatar`, `bio`, `isAdmin`, `createdAt`, `updatedAt`) VALUES
-(5, 'Admin', 'Admin', 'admin@mail.com', '$2b$10$M1LlIkwJgDXMAEpZ2vsKj.CDCYNVM2xv5aiLCM3IvZ/PcLe6CcZPG', 'http://localhost:3000/images/Admin.jpg1626960336530.jpg', 'Je suis l\'administrateur du réseau social !', 1, '2021-07-22 13:21:46', '2021-07-26 14:30:42');
+(5, 'Admin', 'Admin', 'admin@mail.com', '$2b$10$M1LlIkwJgDXMAEpZ2vsKj.CDCYNVM2xv5aiLCM3IvZ/PcLe6CcZPG', 'http://localhost:3000/images/Admin.jpg', 'Je suis l\'administrateur du réseau social !', 1, '2021-07-22 13:21:46', '2021-07-26 14:30:42');
 
 --
 -- Contraintes pour les tables déchargées

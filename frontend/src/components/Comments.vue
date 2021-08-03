@@ -1,15 +1,17 @@
 <template>
-  <div class="  ">      
+  <div class="  ">  
+      <!-- Formulaire pour la création de commentaires -->     
         <form @submit.prevent= 'newComment' class="commentForm m-2 flex flex-col ">
             <label for="new-comment" class="text-sm font-bold text-gray-500 bg-white text-blue tracking-wide  cursor-pointer hover:bg-blue">Laisser un commentaire :</label>
             <textarea name="newComment" id="new-comment" placeholder="Laisser un commentaire..." class="newComment p-2 border border-blue " required></textarea>
             <button class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10 " type="submit" id="send-comment">Envoyer</button>
         </form>
-        <h2 v-if="comments.length > 0" class="text-sm font-bold text-gray-500" >Commentaires :</h2>        
-        <div class="flex space-x-2" v-for="comment in comments" :key="comment.id">
-             
-            <div class="" >
-              <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="comment.User.avatar" alt="">
+        <!-- Titre si il y a des commentaires -->
+        <h2 v-if="comments.length > 0" class="text-sm font-bold text-gray-500" >Commentaires :</h2>  
+        <!-- Affiche la liste des commentaires -->      
+        <div class="flex space-x-2" v-for="comment in comments" :key="comment.id"> 
+            <div>
+              <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full mx-4  shadow" v-bind:src="comment.User.avatar" alt="photo de profil">
             </div>
             <div class="w-full pb-4 ">
                 <div class="bg-gray-100 rounded-xl mr-2">                    
@@ -29,7 +31,6 @@
                         </div>
                     </div>
                 </div> 
-                  
             </div>
         </div>              
     </div>
@@ -85,8 +86,8 @@ export default {
                     }
                 }
             )
-            .then(this.getAllComments())
-           .then(window.location.reload())
+            .then(()=> this.getAllComments())
+          
           
             
         },
@@ -100,8 +101,8 @@ export default {
                     }
                 }
             )
-            .then(this.getAllComments())
-            .then(window.location.reload())
+            .then(() => this.getAllComments())
+         
             
         },
 

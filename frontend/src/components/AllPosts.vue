@@ -1,7 +1,15 @@
 <template>
-<div>       
-  
-    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts.posts" :key="post.id">
+<div>   
+    <!--messsage si il n'y a pas encore de publication  -->    
+   <div v-if="posts.length == 0">
+        <h1 class="p-4 font-bold text-2xl text-gray-800">Bienvenu sur le réseau social interne</h1>
+         
+        <p class="mt-2 text-sm text-gray-400">Vous êtes la première personne à vous connecter, félicitations !<br>
+        Il n'y a aucun message à lire pour le moment...<br>
+        À vous de commencer en postant le premier message !</p>    
+    </div>    
+    <!-- affichage des publications -->
+    <div class="m-auto px-4 py-8 max-w-xl" v-for= "post in posts" :key="post.id">
         <div class="bg-white shadow-2xl" >          
             <div class="px-4 py-2 mt-2 bg-white">
                 <div class="flex items-center justify-between m-2 mb-2 ">
@@ -13,22 +21,18 @@
                         </div> 
                         <div class="text-xs md:text-base">par <span class="text-red-400 ">{{post.User.firstname}}</span>
                         </div>
-                    </div> 
-                    <div class="flex">                   
-                    <svg class=" justify-items-end h-8 w-8 text-red hover:fill-current hover:text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                      stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth=2 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    </div>
+                    </div>                                     
                 </div>
                 <h2 class="p-4 font-bold text-2xl text-gray-800">{{post.title}}</h2>
                 <img v-bind:src="post.imageurl" class="w-full rounded-t-lg">                  
-                <p class="sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>               
+                <p class="text-justify sm:text-sm text-xs text-gray-700 px-2 mr-1 my-3">{{post.content}}</p>               
             </div>
+            <deleteAdmin :post="post"></deleteAdmin>
             <Comments :post="post"></Comments>
         </div> 
-        <div><div id="cRetour" class="cInvisible rounded-xl "></div></div>  
         
+        <div><div id="cRetour" class="cInvisible rounded-xl "></div></div>  
+        <div><a id="cRetour" class="cInvisible" href="#haut"></a></div>
     </div> 
              
 </div> 
@@ -38,6 +42,7 @@
 </template>
 <script>
 import Comments from './Comments.vue';
+import deleteAdmin from './deleteAdmin.vue';
 import axios from 'axios';
 export default {
     
@@ -77,7 +82,7 @@ export default {
             }
         )
         .then(res =>{
-                this.posts = res.data ;
+                this.posts = res.data.posts ;
                 console.log(this.posts)
         })
         .catch (error => console.log(error))
@@ -93,8 +98,8 @@ export default {
                     }
                 }
             )
-            .then(this.getUserPosts())
-            .then(window.location.reload())
+            .then(()=> this.getUserPosts())
+            .then(()=> window.location.reload())
         },
 
       dateFormat(date){
@@ -108,9 +113,16 @@ export default {
     },
 
     components:{
-        Comments
+        Comments,
+        deleteAdmin
     } 
 }
+//gestion du bouton retour en haut
+/*document.addEventListener('DOMContentLoaded', function() {
+  window.onscroll = function() {
+    document.getElementById("cRetour").className = (window.pageYOffset > 100) ? "cVisible" : "cInvisible";
+  };
+});*/
  
 
 

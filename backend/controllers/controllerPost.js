@@ -95,10 +95,12 @@ exports.modifyPost = (req, res, next) => {
                         ...req.body,
                         imageurl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
                     } : { ...req.body };
-                Post.update({ ...postObject, id: req.params.id }, { where: { id: req.params.id } })
-                    .then(() => res.status(200).json({ message: 'Publication modifiée !' }))
-                    .catch(error => res.status(400).json({ error }));
-
+                    const filename = post.imageurl.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, () => {
+                    Post.update({ ...postObject, id: req.params.id }, { where: { id: req.params.id } })
+                     .then(() => res.status(200).json({ message: 'Publication modifiée !' }))
+                     .catch(error => res.status(400).json({ error }));
+                })
             }
             else {
                 res.status(403).json({ 'message': 'Vous n\'ètes pas autoriser' })

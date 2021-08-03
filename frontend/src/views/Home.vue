@@ -4,7 +4,6 @@
    <Header v-if="connected"/>   
    <NewPost v-if="connected"/>    
    <AllPosts v-if="connected"/> 
-   
   </div>
 </template>
 
@@ -25,11 +24,7 @@ export default {
     LoginForm,
     Header,
     AllPosts,
-    NewPost,
-    
-    
-    
-   
+    NewPost   
   },
    data() { 
     return{

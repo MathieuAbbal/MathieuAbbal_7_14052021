@@ -18,7 +18,7 @@
                     <span class="mt-2 text-base leading-normal">Choisir un fichier</span>
                     <input type='file' class="hidden" name="imageurl" id="imageurl" @change="onFileChange" />
                     <div id="preview" class=" object-cover  mx-4  shadow">
-                        <img v-if="imageurl" :src="imageurl" class="flex"  />
+                        <img v-if="imageurl" :src="imageurl" class="flex"/>
                     </div>
                 </label>
             </div>
@@ -103,7 +103,7 @@ export default{
                 }
             }
         )
-        .then(location.href="/");
+        .then(() => location.href="/");
         },
         modifyOnePost(){
             const post_id = this.$route.params.id;
@@ -121,7 +121,7 @@ export default{
                 }
             }
         )
-        .then(location.href = "/");
+        .then(() => location.href = "/");
         },
         toggleModal(){
             this.visible = !this.visible;

@@ -56,7 +56,7 @@ export default {
 
                 console.log(data);
 
-                axios.post("http://localhost:3000/api/posts/",                                                   
+                axios.post("http://localhost:3000/api/posts",                                                   
                         data,                        
                         {
                             headers: {
@@ -64,8 +64,8 @@ export default {
                             }
                         }
                     )
-                    .then( this.visible = false)
-                    .then(location.href="/"); //on retourne sur la vue Home                        
+                    .then(()=> this.visible = false)
+                    .then(()=> location.href="/"); //on retourne sur la vue Home                        
             },
              //affichage de la photo de profil
             onFileChange(e) {//methode qui prend un événement comme argument
