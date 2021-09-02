@@ -1,5 +1,5 @@
 <template>
-    <div class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow overflow-hidden">
+    <div class="mt-20 container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow overflow-hidden">
         <div class="relative hidden xl:block xl:w-1/2 h-full">
             <img class="absolute h-auto w-full object-cover" src="../assets/logo1.png" alt="logo groupomania"/>
         </div>
@@ -14,40 +14,41 @@
                     <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="signup-firstname">Prénom</label>
                     <input class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
                     id="signup-firstname"
-                    type="text"
+                    type="text" aria-label="prénom"
+                    title="veuillez renseigner votre prénom !"
                     placeholder="Votre Prénom" required/>
                 </div>
                 <div class="mb-4 mt-6">
                     <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="signup-lastname">Nom</label>
                     <input class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
                     id="signup-lastname"
-                    type="text"
-                    placeholder="Votre nom" required/>
+                    type="text" aria-label="nom"
+                    placeholder="Votre nom"  required/>
                 </div>
                 <div class="mb-4 mt-6">
                     <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="signup-email">Email</label>
                     <input class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
                     id="signup-email"
-                    type="text"
-                    placeholder="Votre adresse mail" required/>
+                    type="email" aria-label="email"
+                    placeholder="Votre adresse mail" required pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"/>
                 </div>
                 <div class="mb-6 mt-6">
                     <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="signup-password" >Mot de Passe</label>
                     <input class="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10"
                     id="signup-password"
-                    type="password"
-                    placeholder="Votre mot de passe" required/>       
+                    type="password" aria-label="mot de passe" title="Votre mot de passe doit contenir entre 6 et 15 caractères une majuscule, une minuscule et un chiffres"
+                    placeholder="Votre mot de passe" maxlength="15" minlength="6" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"/>       
                 </div>
                 <div class="mb-6 mt-6">
                     <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="signup-password-verify" >Vérification du mot de passe</label>
                     <input class="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10"
                     id="signup-password-verify"
-                    type="password"
+                    type="password" aria-label="vérifier le mot de passe"
                     placeholder="Vérifier le mot de passe" required/> 
                 </div>   
                 <div v-if="message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{{message}}</div>
                 <div class="flex w-full mt-8">
-                    <button class="w-full bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="submit" id="signup-btn">
+                    <button class="w-full bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="submit" id="signup-btn" aria-label="s'inscrire">
                     S'inscrire
                     </button>
                 </div>
@@ -111,5 +112,12 @@ export default {
 </script>
 
 <style>
+input:invalid {
+  border: 1px solid red;
+}
+
+input:valid {
+  border: 1px solid green;
+}
 
 </style>

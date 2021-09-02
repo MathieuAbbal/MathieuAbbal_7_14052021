@@ -8,10 +8,10 @@
 			<p class="mt-2 text-sm text-gray-400">Vous pouvez modifié votre biographie et votre image de profil .</p>
 		</div>
     <!-- Formulaire modification du profil-->
-    <form class="mt-8 space-y-3">
+    <form class="mt-8">
       <div class="flex flex-col ">
         <label class="text-sm font-bold text-gray-500 tracking-wide" html-for="user-bio">biographie</label>
-        <textarea id="bio" class="m-8 p-2 p lg:h-36 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-900" type="" placeholder="Votre biographie"></textarea>
+        <textarea id="bio" class="m-4 p-2 p h-28 lg:h-36 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-900" type="" placeholder="Votre biographie"></textarea>
       </div>
       <div class="m-4 flex justify-center transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ">
         <label class="text-sm font-bold text-gray-500  w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide  border border-blue cursor-pointer hover:bg-blue ">
@@ -27,11 +27,11 @@
       </div>      
     </form>
     <!-- bouton mettre à jour le profil et supprimer le compte -->
-    <div>
-      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
+    <div class="">
+      <button @click="modifyUser()"  type="submit" class="m-4 cursor-pointer bg-gray-800 hover:bg-green-500 text-white text-xs py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10 ">
         Mettre à jour le profil
       </button>
-      <button type="button" v-on:click="toggleModal()" class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10" >
+      <button type="button" v-on:click="toggleModal()" class="m-4 cursor-pointer bg-gray-800 hover:bg-red-500 text-white text-xs py-2 px-4 md:font-semibold rounded focus:outline-none focus:shadow-outline h-10" >
         Supprimer mon compte
       </button>               
     </div>
@@ -76,7 +76,7 @@ export default {
         return{
             firstname:"",
             lastname:"",
-            avatar: null,
+            avatar: "",
             bio:"",
             visible: false,           
         }   
@@ -118,8 +118,9 @@ export default {
     modifyUser(){
       
       let data= new FormData();
-      data.append(`bio`,  document.getElementById("bio").value);
       data.append(`image`, document.getElementById("avatar").files[0]);
+      data.append(`bio`,  document.getElementById("bio").value);
+      
       
       axios.put("http://localhost:3000/api/users/"+ JSON.parse(sessionStorage.user).user_id,
          data,
@@ -131,7 +132,7 @@ export default {
           }
         )  
               
-        //  .then(() => location.href="/")
+          
           .then(() => this.$router.push({path:'/users'}));
     },
     //affichage de la photo de profil

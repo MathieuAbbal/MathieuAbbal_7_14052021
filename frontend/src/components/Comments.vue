@@ -15,7 +15,7 @@
             </div>
             <div class="w-full pb-4 ">
                 <div class="bg-gray-100 rounded-xl mr-2">                    
-                    <div class="text-sm p-2 m-2 text-left">
+                    <div class="sm:text-sm text-xs p-2 m-2 text-left">
                       {{comment.content}}
                     </div>                                                       
                     <div class=" text-xs ">                        

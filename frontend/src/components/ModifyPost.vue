@@ -4,10 +4,10 @@
         <form class="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"  >
             <!-- modif du titre -->
             <label for="modify-title" class="block text-gray-700 text-sm font-bold mb-2">Modifier le titre :</label>
-            <input class="border border-gray-300 p-2 mb-8" type="text" id="modify-title" v-model="this.post.title">
+            <input class="border border-gray-300 p-2 mb-8" type="text" id="modify-title" v-model="this.title" minlength="2" required>
             <!-- modif du contenu -->
             <label for="modify-content" class="block text-gray-700 text-sm font-bold mb-2">Modifier le contenu :</label>            
-            <textarea class="lg:h-56 border border-gray-300 p-2 mb-8" id="modify-content" v-model="this.post.content"></textarea>
+            <textarea class="lg:h-56 h-28  border border-gray-300 p-2 mb-8" id="modify-content" v-model="this.content"></textarea>
             <!-- modif du l'image -->
             <label for="modifyPost-img" class="block text-gray-700 text-sm font-bold mb-2">Modifier image :</label>
             <div class="m-4 flex justify-center transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ">
@@ -26,7 +26,7 @@
         <!-- fin du formulaire -->
         <!-- bouton publier / supprimer -->
         <div class="flex flex-col" >               
-            <button class="cursor-pointer m-2 bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="button" v-on:click="modifyOnePost()"  >Publier les modifications</button>
+            <button class="cursor-pointer m-2 bg-gray-800 hover:bg-green-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="submit" v-on:click="modifyOnePost()"  >Publier les modifications</button>
             <button class="cursor-pointer m-2 bg-gray-800 hover:bg-red-500 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" v-on:click="toggleModal()" >Supprimer le post</button>
         </div>
         <!-- modale suppression publication -->
@@ -67,15 +67,30 @@ export default{
             post:[],
             visible: false,
             imageurl:'',  
-            title:''          
+            title:'' ,
+            content:''        
             
         }
     },
-    mounted(){
-        this.getOnePost();        
+    created: function(){ //hook qui permet d'accéder aux data et events qui sont actifs
+    const post_id = this.$route.params.id;
+        axios.get(`http://localhost:3000/api/posts/${post_id}`,
+        { 
+            headers: {
+                 'Content-Type':'application/json',
+                 'Authorization': `Bearer `+ JSON.parse(sessionStorage.user).token
+                }
+        })
+        .then(post => {
+            this.title = post.data.title
+            this.content = post.data.content
+            this.imageurl= post.data.imageurl
+                      
+        })
+        .catch (error => console.log(error))
     },
     methods:{
-        getOnePost(){
+     /*   getOnePost(){
         const post_id = this.$route.params.id;
 
         axios.get(`http://localhost:3000/api/posts/${post_id}`,
@@ -91,7 +106,7 @@ export default{
             
         
          
-        },
+        },*/
         deleteOnePost(){
             const post_id = this.$route.params.id;
 
@@ -121,7 +136,8 @@ export default{
                 }
             }
         )
-        .then(() => location.href = "/");
+     
+       .then(() => this.$router.push({path:'/'}));
         },
         toggleModal(){
             this.visible = !this.visible;
