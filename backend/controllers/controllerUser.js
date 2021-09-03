@@ -32,7 +32,7 @@ exports.modifyUser = (req, res, next) => {
  
   const userObject = req.file ?//Opérateur ternaire équivalent à if() {} else {} => condition ? Instruction si vrai : Instruction si faux   
     {
-      ...req.body.user,//opérateur spread pour faire une copie de la variable
+      bio : req.body.bio,//opérateur spread pour faire une copie de la variable
       avatar:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
 
