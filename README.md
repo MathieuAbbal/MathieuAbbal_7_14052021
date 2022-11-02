@@ -1,4 +1,4 @@
-# Projet 7 de la formation de developpeur Web **OpenClassrooms**  
+# Projet 7 de la formation de developpeur Web  chez **OpenClassrooms**  
 ## Scénario
 Création d'un réseau social d'entreprise pour Groupomania (une socièté fictive).  
 Développement d'une application web full stack.
